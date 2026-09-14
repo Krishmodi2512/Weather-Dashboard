@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Real-time responsive weather dashboard">
+
+    <title>Weather Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- ================= HEADER ================= -->
+
+        <header class="header">
+
+            <div class="brand">
+                <div class="brand-icon">🌊</div>
+
+                <div>
+                    <h1>Weather Dashboard</h1>
+                    <p>Real-time weather information</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+
+                <button id="themeBtn" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
+                    🌙
+                </button>
+
+                <button id="refreshBtn" class="icon-btn" aria-label="Refresh weather" title="Refresh weather">
+                    ↻
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <section class="search-section">
+
+            <div class="search-box">
+
+                <div class="input-wrapper">
+
+                    <span class="search-icon">🔎</span>
+
+                    <input type="text" id="cityInput" placeholder="Enter city name..." autocomplete="off">
+
+                </div>
+
+                <button id="searchBtn" class="search-btn">
+                    Search
+                </button>
+
+            </div>
+
+            <p class="search-hint">
+                Try: Indore, Mumbai, Delhi, London, New York
+            </p>
+
+        </section>
+
+
+        <!-- ================= STATUS ================= -->
+
+        <div id="loading" class="loading hidden">
+
+            <div class="spinner"></div>
+
+            <p>Fetching weather data...</p>
+
+        </div>
+
+
+        <div id="errorBox" class="error hidden">
+
+            <div class="error-icon">⚠️</div>
+
+            <div>
+                <strong>Something went wrong</strong>
+
+                <p id="errorMessage"></p>
+            </div>
+
+        </div>
+
+
+        <!-- ================= WEATHER ================= -->
+
+        <main id="weatherContent" class="hidden">
+
+
+            <!-- LOCATION -->
+
+            <section class="location-card">
+
+                <div class="location-info">
+
+                    <span class="section-label">
+                        CURRENT LOCATION
+                    </span>
+
+                    <h2 id="cityName">
+                        Indore
+                    </h2>
+
+                    <p id="locationDetails">
+                        Madhya Pradesh, India
+                    </p>
+
+                </div>
+
+
+                <div class="date-area">
+
+                    <p id="currentDate">
+                        --
+                    </p>
+
+                    <p id="currentTime">
+                        --
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- MAIN WEATHER -->
+
+            <section class="weather-main-card">
+
+                <div class="weather-left">
+
+                    <div id="weatherIcon" class="weather-icon">
+                        ☀️
+                    </div>
+
+                    <div>
+
+                        <div class="temperature">
+
+                            <span id="temperature">
+                                --
+                            </span>
+
+                            <sup>°C</sup>
+
+                        </div>
+
+                        <h3 id="weatherDescription">
+                            Loading...
+                        </h3>
+
+                        <p id="feelsLike">
+                            Feels like --°C
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="weather-status">
+
+                    <span class="status-dot"></span>
+
+                    <span>Live Weather</span>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= METRICS ================= -->
+
+            <section class="metrics-grid">
+
+
+                <div class="metric-card">
+
+                    <div class="metric-icon humidity-icon">
+                        💧
+                    </div>
+
+                    <div>
+
+                        <p>Humidity</p>
+
+                        <h3 id="humidity">
+                            --%
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="metric-card">
+
+                    <div class="metric-icon">
+                        💨
+                    </div>
+
+                    <div>
+
+                        <p>Wind Speed</p>
+
+                        <h3 id="windSpeed">
+                            -- km/h
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="metric-card">
+
+                    <div class="metric-icon">
+                        🌡️
+                    </div>
+
+                    <div>
+
+                        <p>Pressure</p>
+
+                        <h3 id="pressure">
+                            -- hPa
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="metric-card">
+
+                    <div class="metric-icon">
+                        👁️
+                    </div>
+
+                    <div>
+
+                        <p>Visibility</p>
+
+                        <h3 id="visibility">
+                            -- km
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= DETAILS ================= -->
+
+            <section class="details-card">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h2>Weather Details</h2>
+
+                        <p>
+                            More information about current conditions
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="details-grid">
+
+
+                    <div class="detail-item">
+
+                        <span>Wind Direction</span>
+
+                        <strong id="windDirection">
+                            --°
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>Cloud Cover</span>
+
+                        <strong id="cloudCover">
+                            --%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>Precipitation</span>
+
+                        <strong id="precipitation">
+                            -- mm
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>UV Index</span>
+
+                        <strong id="uvIndex">
+                            --
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= FORECAST ================= -->
+
+            <section class="forecast-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h2>7-Day Forecast</h2>
+
+                        <p>
+                            Upcoming weather conditions
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div id="forecastContainer" class="forecast-container">
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= JSON ================= -->
+
+            <section class="api-section">
+
+                <details>
+
+                    <summary>
+                        View API JSON Data
+                    </summary>
+
+                    <pre id="jsonData"></pre>
+
+                </details>
+
+            </section>
+
+        </main>
+
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <p>
+                🌊 Weather Dashboard
+            </p>
+
+            <p>
+                Powered by Open-Meteo
+            </p>
+
+        </footer>
+
+    </div>
+
+
+    <script src="scriprt.js"></script>
+
+</body>
+
+</html>
